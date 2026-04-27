@@ -30,9 +30,7 @@ def pytest_configure(config):
             '"typescript":"^5.0.0"}}'
         )
         (sample / "package.json").write_text(pkg)
-        (sample / "README.md").write_text(
-            "# Sample App\n\nA sample web application for testing.\n"
-        )
+        (sample / "README.md").write_text("# Sample App\n\nA sample web application for testing.\n")
         (sample / "index.html").write_text("<html><body>Hello</body></html>")
         subprocess.run(
             ["git", "add", "."],
@@ -44,9 +42,7 @@ def pytest_configure(config):
             cwd=sample,
             capture_output=True,
         )
-        (sample / "index.html").write_text(
-            "<html><body>Hello World</body></html>"
-        )
+        (sample / "index.html").write_text("<html><body>Hello World</body></html>")
         subprocess.run(
             ["git", "add", "."],
             cwd=sample,
@@ -76,15 +72,9 @@ def pytest_configure(config):
             cwd=backend,
             capture_output=True,
         )
-        pyproj = (
-            '[project]\n'
-            'name = "backend-api"\n'
-            'dependencies = ["fastapi", "uvicorn"]'
-        )
+        pyproj = '[project]\nname = "backend-api"\ndependencies = ["fastapi", "uvicorn"]'
         (backend / "pyproject.toml").write_text(pyproj)
-        (backend / "main.py").write_text(
-            "from fastapi import FastAPI\napp = FastAPI()\n"
-        )
+        (backend / "main.py").write_text("from fastapi import FastAPI\napp = FastAPI()\n")
         subprocess.run(
             ["git", "add", "."],
             cwd=backend,

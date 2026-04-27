@@ -42,23 +42,42 @@ PYTHON_FRAMEWORK_MAP = {
 }
 
 LANG_EXT_MAP = {
-    ".py": "Python", ".rs": "Rust", ".go": "Go",
-    ".ts": "TypeScript", ".tsx": "TypeScript",
-    ".js": "JavaScript", ".jsx": "JavaScript",
-    ".rb": "Ruby", ".java": "Java",
-    ".kt": "Kotlin", ".swift": "Swift",
-    ".c": "C", ".cpp": "C++",
-    ".cs": "C#", ".ex": "Elixir",
+    ".py": "Python",
+    ".rs": "Rust",
+    ".go": "Go",
+    ".ts": "TypeScript",
+    ".tsx": "TypeScript",
+    ".js": "JavaScript",
+    ".jsx": "JavaScript",
+    ".rb": "Ruby",
+    ".java": "Java",
+    ".kt": "Kotlin",
+    ".swift": "Swift",
+    ".c": "C",
+    ".cpp": "C++",
+    ".cs": "C#",
+    ".ex": "Elixir",
 }
 
 TEST_INDICATORS = {
-    "pytest", "jest", "vitest", "mocha", "jasmine", "rspec",
-    "go test", "cargo test", "minitest"
+    "pytest",
+    "jest",
+    "vitest",
+    "mocha",
+    "jasmine",
+    "rspec",
+    "go test",
+    "cargo test",
+    "minitest",
 }
 
 CI_FILES = {
-    ".github/workflows", ".gitlab-ci.yml", ".travis.yml",
-    "Jenkinsfile", "circle.ci", ".circleci",
+    ".github/workflows",
+    ".gitlab-ci.yml",
+    ".travis.yml",
+    "Jenkinsfile",
+    "circle.ci",
+    ".circleci",
 }
 
 
@@ -75,8 +94,9 @@ def detect_stack(repo_path: Path) -> list[str]:
     if pkg.exists():
         try:
             data = json.loads(pkg.read_text(errors="replace"))
-            all_deps = list(data.get("dependencies", {}).keys()) + \
-                       list(data.get("devDependencies", {}).keys())
+            all_deps = list(data.get("dependencies", {}).keys()) + list(
+                data.get("devDependencies", {}).keys()
+            )
             _add("JavaScript")
             if any("typescript" in d for d in all_deps):
                 _add("TypeScript")
@@ -118,8 +138,18 @@ def detect_languages(repo_path: Path) -> dict[str, float]:
     for f in repo_path.rglob("*"):
         if f.is_file() and ".git" not in f.parts:
             # Skip binary-ish and irrelevant files
-            if f.suffix.lower() in {".png", ".jpg", ".jpeg", ".gif", ".svg",
-                                    ".ico", ".woff", ".ttf", ".lock", ".sum"}:
+            if f.suffix.lower() in {
+                ".png",
+                ".jpg",
+                ".jpeg",
+                ".gif",
+                ".svg",
+                ".ico",
+                ".woff",
+                ".ttf",
+                ".lock",
+                ".sum",
+            }:
                 continue
             lang = LANG_EXT_MAP.get(f.suffix.lower())
             if lang:
