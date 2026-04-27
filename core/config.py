@@ -15,9 +15,9 @@ class ProfileConfig:
 @dataclass
 class ScanConfig:
     paths: list[str] = field(default_factory=lambda: ["~/projects"])
-    exclude: list[str] = field(default_factory=lambda: [
-        "**/.git", "**/node_modules", "**/dist", "**/.venv"
-    ])
+    exclude: list[str] = field(
+        default_factory=lambda: ["**/.git", "**/node_modules", "**/dist", "**/.venv"]
+    )
     min_commits: int = 1
     max_age_days: int = 730
 

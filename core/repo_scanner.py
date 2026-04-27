@@ -17,8 +17,7 @@ def _repo_id(path: Path) -> str:
 def _run_git(args: list[str], cwd: Path) -> str:
     try:
         result = subprocess.run(
-            ["git", "-C", str(cwd)] + args,
-            capture_output=True, text=True, timeout=20
+            ["git", "-C", str(cwd)] + args, capture_output=True, text=True, timeout=20
         )
         return result.stdout.strip() if result.returncode == 0 else ""
     except (subprocess.TimeoutExpired, FileNotFoundError):
@@ -58,7 +57,8 @@ def _read_readme(repo_path: Path) -> tuple[str | None, str | None]:
                 paragraphs = [p.strip() for p in content.split("\n\n") if p.strip()]
                 # Skip title line and badge lines
                 text_paras = [
-                    p for p in paragraphs
+                    p
+                    for p in paragraphs
                     if not p.startswith("#") and not p.startswith("!") and len(p) > 20
                 ]
                 if text_paras:
@@ -68,7 +68,7 @@ def _read_readme(repo_path: Path) -> tuple[str | None, str | None]:
                     for punct in [". ", "! ", "? "]:
                         idx = short_desc.find(punct)
                         if 30 < idx < 200:
-                            short_desc = short_desc[:idx + 1]
+                            short_desc = short_desc[: idx + 1]
                             break
                     return short_desc, long_desc
             except OSError:
@@ -114,9 +114,7 @@ def scan_repo(path: Path, use_cache: bool = True) -> ProjectRecord | None:
         last_commit = _parse_dt(last_commit_str)
         total_commits = int(total_str) if total_str.isdigit() else 0
         contributors = [
-            line.split("\t", 1)[1].strip()
-            for line in contributors_raw.splitlines()
-            if "\t" in line
+            line.split("\t", 1)[1].strip() for line in contributors_raw.splitlines() if "\t" in line
         ]
 
         # Tech stack
@@ -130,8 +128,7 @@ def scan_repo(path: Path, use_cache: bool = True) -> ProjectRecord | None:
 
         # Directory size (rough)
         size_bytes = sum(
-            f.stat().st_size for f in path.rglob("*")
-            if f.is_file() and ".git" not in f.parts
+            f.stat().st_size for f in path.rglob("*") if f.is_file() and ".git" not in f.parts
         )
 
         record = ProjectRecord(
@@ -176,8 +173,9 @@ def _parse_dt(s: str) -> datetime | None:
         return None
 
 
-def scan_root(root: Path, min_commits: int = 1, max_depth: int = 5,
-              exclude: list[str] | None = None) -> list[ProjectRecord]:
+def scan_root(
+    root: Path, min_commits: int = 1, max_depth: int = 5, exclude: list[str] | None = None
+) -> list[ProjectRecord]:
     """Walk root directory and return all ProjectRecords found."""
     records: list[ProjectRecord] = []
     root = root.expanduser().resolve()

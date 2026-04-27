@@ -12,6 +12,7 @@ def setup():
     """Interactive setup: generate config.toml and prepare the site."""
     from rich.console import Console
     from rich.prompt import Prompt
+
     console = Console()
     console.print("[bold]Auto-Portfolio Setup[/bold]\n")
 
@@ -114,6 +115,7 @@ def preview(
     import subprocess
 
     from rich.console import Console
+
     console = Console()
     site_path = Path(site_dir)
     if not (site_path / "dist").exists():
@@ -132,6 +134,7 @@ def health(
     import json
 
     from rich.console import Console
+
     console = Console()
 
     data_file = Path(site_dir) / "src" / "data" / "projects.json"

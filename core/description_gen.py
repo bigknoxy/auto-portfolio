@@ -32,9 +32,10 @@ def extract_commit_highlights(repo_path: Path, n: int = 10) -> list[str]:
     """Return the last N non-merge commit messages."""
     try:
         result = subprocess.run(
-            ["git", "-C", str(repo_path), "log", "--no-merges",
-             f"--max-count={n}", "--format=%s"],
-            capture_output=True, text=True, timeout=10
+            ["git", "-C", str(repo_path), "log", "--no-merges", f"--max-count={n}", "--format=%s"],
+            capture_output=True,
+            text=True,
+            timeout=10,
         )
         if result.returncode == 0:
             return [line.strip() for line in result.stdout.splitlines() if line.strip()]
