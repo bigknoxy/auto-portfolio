@@ -1,0 +1,58 @@
+---
+interface Project {
+  slug: string;
+  name: string;
+  description?: string;
+  primary_language?: string;
+  stack?: string[];
+  total_commits?: number;
+  last_active_display?: string;
+  quality_score?: number;
+  has_tests?: boolean;
+  has_ci?: boolean;
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+
+const LANG_COLORS: Record<string, string> = {
+  TypeScript: 'bg-blue-500', JavaScript: 'bg-yellow-400', Python: 'bg-green-500',
+  Rust: 'bg-orange-500', Go: 'bg-cyan-400', Ruby: 'bg-red-500', Java: 'bg-red-600',
+};
+const langColor = LANG_COLORS[project.primary_language || ''] || 'bg-gray-500';
+---
+<a href={`/projects/${project.slug}`}
+   class="block bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-indigo-500/50 transition-all hover:bg-gray-900/80 group">
+  <div class="flex items-start justify-between mb-3">
+    <h3 class="font-semibold text-white group-hover:text-indigo-300 transition-colors truncate mr-2">
+      {project.name}
+    </h3>
+    {project.primary_language && (
+      <span class={`text-xs px-2 py-0.5 rounded-full text-gray-900 font-medium shrink-0 ${langColor}`}>
+        {project.primary_language}
+      </span>
+    )}
+  </div>
+
+  {project.description && (
+    <p class="text-sm text-gray-400 mb-4 line-clamp-2">{project.description}</p>
+  )}
+
+  {project.stack && project.stack.length > 0 && (
+    <div class="flex flex-wrap gap-1.5 mb-4">
+      {project.stack.slice(0, 4).map(tech => (
+        <span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded">
+          {tech}
+        </span>
+      ))}
+    </div>
+  )}
+
+  <div class="flex items-center justify-between text-xs text-gray-500">
+    <span>{project.total_commits || 0} commits</span>
+    <span>{project.last_active_display || ''}</span>
+  </div>
+</a>

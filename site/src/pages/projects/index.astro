@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+let projects = [];
+try {
+  const data = await import('../../data/projects.json');
+  projects = data.default.projects || [];
+} catch (e) {}
+
+const sorted = [...projects].sort((a, b) =>
+  new Date(b.last_active || 0).getTime() - new Date(a.last_active || 0).getTime()
+);
+---
+<BaseLayout title="All Projects">
+  <h1 class="text-3xl font-bold mb-8">All Projects ({projects.length})</h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {sorted.map(project => <ProjectCard project={project} />)}
+  </div>
+</BaseLayout>

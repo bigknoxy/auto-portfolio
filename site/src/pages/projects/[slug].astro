@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  let projects = [];
+  try {
+    const data = await import('../../data/projects.json');
+    projects = data.default.projects || [];
+  } catch (e) {}
+  return projects.map(p => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+---
+<BaseLayout title={project.name} description={project.description}>
+  <a href="/projects" class="text-indigo-400 hover:text-indigo-300 text-sm mb-6 inline-block">&larr; All Projects</a>
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-white mb-2">{project.name}</h1>
+    {project.description && <p class="text-lg text-gray-400">{project.description}</p>}
+  </div>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    {[
+      { label: 'Commits', value: project.total_commits },
+      { label: 'Language', value: project.primary_language || '—' },
+      { label: 'Last Active', value: project.last_active_display },
+      { label: 'Quality', value: `${Math.round((project.quality_score || 0) * 100)}%` },
+    ].map(s => (
+      <div class="bg-gray-900 rounded-lg p-4 text-center border border-gray-800">
+        <div class="text-xl font-bold text-indigo-400">{s.value}</div>
+        <div class="text-xs text-gray-500">{s.label}</div>
+      </div>
+    ))}
+  </div>
+
+  {project.stack && project.stack.length > 0 && (
+    <div class="mb-6">
+      <h2 class="text-lg font-semibold mb-3">Tech Stack</h2>
+      <div class="flex flex-wrap gap-2">
+        {project.stack.map(tech => (
+          <span class="bg-gray-800 text-gray-200 px-3 py-1 rounded-lg text-sm">{tech}</span>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {project.long_description && (
+    <div class="prose prose-invert max-w-none">
+      <h2>About</h2>
+      <p>{project.long_description}</p>
+    </div>
+  )}
+
+  {project.remote_url && (
+    <div class="mt-8">
+      <a href={project.remote_url} target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm transition-colors">
+        View Repository &rarr;
+      </a>
+    </div>
+  )}
+</BaseLayout>

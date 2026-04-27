@@ -1,0 +1,206 @@
+{
+  "generated_at": "2026-04-27T13:23:35.928416Z",
+  "projects": [
+    {
+      "id": "6c4eaf6568947eed",
+      "name": "backend_repo",
+      "slug": "backend-repo",
+      "description": null,
+      "long_description": null,
+      "path": "/Users/Joshua.Knox/projects/auto-portfolio/tests/fixtures/backend_repo",
+      "remote_url": null,
+      "created_at": "2026-04-26T16:52:06-05:00",
+      "last_active": "2026-04-26T16:52:06-05:00",
+      "last_active_display": "Today",
+      "total_commits": 1,
+      "contributors": [
+        "Test User"
+      ],
+      "primary_language": "Python",
+      "languages": {
+        "Python": 100.0
+      },
+      "stack": [
+        "Python",
+        "FastAPI"
+      ],
+      "has_tests": false,
+      "has_ci": false,
+      "has_docs": false,
+      "quality_score": 0.15,
+      "tags": [],
+      "screenshot": null,
+      "preview_text": null,
+      "size_bytes": 112
+    },
+    {
+      "id": "e7e2b3944b31c8cb",
+      "name": "sample_repo",
+      "slug": "sample-repo",
+      "description": "A sample web application for testing.",
+      "long_description": "A sample web application for testing.",
+      "path": "/Users/Joshua.Knox/projects/auto-portfolio/tests/fixtures/sample_repo",
+      "remote_url": null,
+      "created_at": "2026-04-26T16:52:06-05:00",
+      "last_active": "2026-04-26T16:52:06-05:00",
+      "last_active_display": "Today",
+      "total_commits": 2,
+      "contributors": [
+        "Test User"
+      ],
+      "primary_language": "JavaScript",
+      "languages": {},
+      "stack": [
+        "JavaScript",
+        "TypeScript",
+        "React"
+      ],
+      "has_tests": false,
+      "has_ci": false,
+      "has_docs": true,
+      "quality_score": 0.4,
+      "tags": [],
+      "screenshot": null,
+      "preview_text": null,
+      "size_bytes": 185
+    },
+    {
+      "id": "a6a47d69425d72cd",
+      "name": "digital-spring-clean",
+      "slug": "digital-spring-clean",
+      "description": "> One command. Dramatic results. An intelligent cleanup engine that reclaims gigabytes with a beautiful real-time progress report.",
+      "long_description": "> One command. Dramatic results. An intelligent cleanup engine that reclaims gigabytes with a beautiful real-time progress report.",
+      "path": "/Users/Joshua.Knox/projects/digital-spring-clean",
+      "remote_url": "https://github.com/bigknoxy/digital-spring-clean.git",
+      "created_at": "2026-04-26T16:16:08-05:00",
+      "last_active": "2026-04-26T16:16:08-05:00",
+      "last_active_display": "Today",
+      "total_commits": 2,
+      "contributors": [
+        "bigknoxy"
+      ],
+      "primary_language": "Python",
+      "languages": {
+        "Python": 100.0
+      },
+      "stack": [
+        "Python",
+        "Click",
+        "Pytest"
+      ],
+      "has_tests": true,
+      "has_ci": true,
+      "has_docs": true,
+      "quality_score": 1.0,
+      "tags": [],
+      "screenshot": null,
+      "preview_text": null,
+      "size_bytes": 43724212
+    },
+    {
+      "id": "66ed0c10eb753255",
+      "name": "knowledge-base-dashboard",
+      "slug": "knowledge-base-dashboard",
+      "description": "[![CI](https://github.com/bigknoxy/knowledge-base-dashboard/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bigknoxy/knowledge-base-dashboard/actions)",
+      "long_description": "[![CI](https://github.com/bigknoxy/knowledge-base-dashboard/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bigknoxy/knowledge-base-dashboard/actions)",
+      "path": "/Users/Joshua.Knox/projects/knowledge-base-dashboard",
+      "remote_url": "https://github.com/bigknoxy/knowledge-base-dashboard.git",
+      "created_at": "2026-04-26T22:08:38-05:00",
+      "last_active": "2026-04-26T22:08:38-05:00",
+      "last_active_display": "Today",
+      "total_commits": 12,
+      "contributors": [
+        "Joshua Knox"
+      ],
+      "primary_language": "Python",
+      "languages": {
+        "Python": 97.4,
+        "C": 2.3,
+        "JavaScript": 0.3
+      },
+      "stack": [
+        "Python",
+        "Pydantic",
+        "Typer",
+        "Textual",
+        "Pytest"
+      ],
+      "has_tests": true,
+      "has_ci": true,
+      "has_docs": true,
+      "quality_score": 1.0,
+      "tags": [],
+      "screenshot": null,
+      "preview_text": null,
+      "size_bytes": 176413952
+    },
+    {
+      "id": "4b44d8958c5a944e",
+      "name": "swarm",
+      "slug": "swarm",
+      "description": null,
+      "long_description": null,
+      "path": "/Users/Joshua.Knox/projects/swarm",
+      "remote_url": null,
+      "created_at": "2026-04-14T20:30:13-05:00",
+      "last_active": "2026-04-14T20:30:13-05:00",
+      "last_active_display": "12 days ago",
+      "total_commits": 7,
+      "contributors": [
+        "Joshua Knox"
+      ],
+      "primary_language": "Python",
+      "languages": {
+        "Python": 100.0
+      },
+      "stack": [],
+      "has_tests": true,
+      "has_ci": false,
+      "has_docs": false,
+      "quality_score": 0.35,
+      "tags": [],
+      "screenshot": null,
+      "preview_text": null,
+      "size_bytes": 17469852
+    },
+    {
+      "id": "7cada92eee951afc",
+      "name": "swarm2",
+      "slug": "swarm2",
+      "description": "Local AI coding agent framework.",
+      "long_description": "Local AI coding agent framework. Autonomous ReAct+TDD agent powered by local Ollama models.",
+      "path": "/Users/Joshua.Knox/projects/swarm2",
+      "remote_url": null,
+      "created_at": "2026-04-21T11:17:59-05:00",
+      "last_active": "2026-04-21T11:17:59-05:00",
+      "last_active_display": "6 days ago",
+      "total_commits": 9,
+      "contributors": [
+        "Joshua Knox"
+      ],
+      "primary_language": "TypeScript",
+      "languages": {
+        "TypeScript": 51.8,
+        "JavaScript": 47.8,
+        "Go": 0.2,
+        "Python": 0.2,
+        "C": 0.0,
+        "Rust": 0.0
+      },
+      "stack": [
+        "JavaScript",
+        "TypeScript",
+        "Vite",
+        "Vitest"
+      ],
+      "has_tests": true,
+      "has_ci": true,
+      "has_docs": true,
+      "quality_score": 1.0,
+      "tags": [],
+      "screenshot": null,
+      "preview_text": null,
+      "size_bytes": 338041958
+    }
+  ]
+}

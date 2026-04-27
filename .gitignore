@@ -1,0 +1,51 @@
+# Byte-compiled
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual env
+.venv/
+*.egg-info/
+*.egg
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Linters
+.ruff_cache/
+.mypy_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Astro
+site/dist/
+site/node_modules/
+site/.astro/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Build
+build/
+dist/
+
+# Local config overrides
+config.local.toml
+
+# Cache
+~/.cache/auto-portfolio/
+
+# Secrets
+.env
+.env.local

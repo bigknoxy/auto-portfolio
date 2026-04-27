@@ -1,0 +1,26 @@
+[profile]
+name = "Your Name"
+title = "Software Engineer"
+bio = "I build things."
+# avatar = "~/Pictures/avatar.jpg"
+# social.github = "https://github.com/yourusername"
+# social.linkedin = "https://linkedin.com/in/yourusername"
+
+[scan]
+paths = ["~/projects"]
+exclude = ["**/.git", "**/node_modules", "**/dist", "**/.venv", "**/target"]
+min_commits = 1
+max_age_days = 730
+
+[site]
+theme = "dark"
+accent_color = "#6366f1"
+language = "en"
+
+[deploy]
+target = "github-pages"
+# domain = "yourdomain.com"
+
+[cache]
+enabled = true
+dir = "~/.cache/auto-portfolio"

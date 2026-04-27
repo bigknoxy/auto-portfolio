@@ -1,0 +1,21 @@
+# Code owners for auto-portfolio
+# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Python core logic
+/core/ @bigknoxy
+
+# Astro site
+/site/ @bigknoxy
+
+# CLI
+/cli/ @bigknoxy
+/cmd/ @bigknoxy
+
+# Data models
+/data/ @bigknoxy
+
+# CI/CD
+.github/workflows/ @bigknoxy
+
+# Everything else defaults to owner
+* @bigknoxy
