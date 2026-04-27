@@ -71,9 +71,12 @@ jobs:
           path: site/dist
 
   # ── 4. GitHub Pages deployment (on main only) ───────────────────
+  # NOTE: Enable GitHub Pages at:
+  #   Settings → Pages → Source: "GitHub Actions"
+  # Then remove the `if: false` guard below.
   deploy:
     name: 🚀 Deploy to GitHub Pages
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: false && github.ref == 'refs/heads/main' && github.event_name == 'push' # TODO: remove `false &&` after enabling Pages
     needs: [build]
     runs-on: ubuntu-latest
     permissions:
