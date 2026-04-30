@@ -5,6 +5,14 @@ interface Props {
 }
 
 const { title, description = "Auto-generated developer portfolio" } = Astro.props;
+
+// Astro bundles this via @astrojs/tailwind
+import '../styles/global.css';
+
+// Calculate base-relative paths that work from any page depth
+const depth = Astro.url.pathname.split('/').filter(Boolean).length;
+const up = depth > 0 ? '../'.repeat(depth) : '/';
+const projectsUrl = depth > 0 ? '../'.repeat(depth) + 'projects/' : '/projects/';
 ---
 <!DOCTYPE html>
 <html lang="en" class="dark">
@@ -15,15 +23,14 @@ const { title, description = "Auto-generated developer portfolio" } = Astro.prop
   <title>{title}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
-  <link rel="stylesheet" href="/styles/global.css" />
 </head>
 <body class="min-h-screen bg-gray-950 text-gray-100 font-sans">
   <nav class="border-b border-gray-800 bg-gray-950/80 backdrop-blur sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="/" class="font-bold text-lg text-indigo-400 hover:text-indigo-300 transition-colors">Portfolio</a>
+      <a href={up} class="font-bold text-lg text-indigo-400 hover:text-indigo-300 transition-colors">Portfolio</a>
       <div class="flex gap-6 text-sm text-gray-400">
-        <a href="/" class="hover:text-white transition-colors">Home</a>
-        <a href="/projects" class="hover:text-white transition-colors">Projects</a>
+        <a href={up} class="hover:text-white transition-colors">Home</a>
+        <a href={projectsUrl} class="hover:text-white transition-colors">Projects</a>
       </div>
     </div>
   </nav>
