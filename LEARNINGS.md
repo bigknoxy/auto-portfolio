@@ -106,7 +106,19 @@ This is acceptable; don't assert `sum == 100.0` in tests.
 
 ---
 
-All 16 tasks complete! ✅
----
+## Learning 004 — 2026-04-29: ruff line length and integration test fixes
+**Problem:** Multiple ruff E501 (line too long) errors and broken integration test
+**Root cause:**
+  - Lines in `profile_importer.py` exceeded 100 chars with f-strings and inline logic
+  - `tests/integration/test_github_workflow.py` used dict where `ProfileConfig` object expected
+  - Date format `2023-6-1T00:00:00Z` was invalid ISO-8601 (should be `2023-06-01T00:00:00Z`)
+  - Test assertion accessed `projects_data[0]` but JSON structure is `{"projects": [...]}`
+**Fix:**
+  - Split long lines, extracted intermediate variables
+  - Updated test to use `ProfileConfig` object for `write_profile_json`
+  - Fixed date format in test fixture
+  - Fixed assertion to access `projects_data["projects"][0]`
+  - Made `write_projects_json` accept both `ProjectRecord` objects and plain dicts via `_to_dict` helper
+**Prevention:** Always use valid ISO-8601 dates in test fixtures; verify function signatures match test usage
 
 *No task learnings yet — add them as you work.*

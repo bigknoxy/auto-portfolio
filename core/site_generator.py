@@ -12,11 +12,18 @@ def write_projects_json(records: list[ProjectRecord], site_data_dir: Path) -> Pa
     site_data_dir.mkdir(parents=True, exist_ok=True)
     output = {
         "generated_at": datetime.utcnow().isoformat() + "Z",
-        "projects": [r.to_json_dict() for r in records],
+        "projects": [_to_dict(r) for r in records],
     }
     out_path = site_data_dir / "projects.json"
     out_path.write_text(json.dumps(output, indent=2, default=str))
     return out_path
+
+
+def _to_dict(r):
+    """Convert record to dict, handling both ProjectRecord and dict."""
+    if hasattr(r, "to_json_dict"):
+        return r.to_json_dict()
+    return r
 
 
 def write_profile_json(profile: ProfileConfig, site_data_dir: Path) -> Path:

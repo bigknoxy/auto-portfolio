@@ -1,68 +1,70 @@
 {
-  "generated_at": "2026-04-27T13:23:35.928416Z",
+  "generated_at": "2026-04-30T12:48:46.620076Z",
   "projects": [
     {
-      "id": "6c4eaf6568947eed",
-      "name": "backend_repo",
-      "slug": "backend-repo",
-      "description": null,
-      "long_description": null,
-      "path": "/Users/Joshua.Knox/projects/auto-portfolio/tests/fixtures/backend_repo",
-      "remote_url": null,
-      "created_at": "2026-04-26T16:52:06-05:00",
-      "last_active": "2026-04-26T16:52:06-05:00",
+      "id": "8509b8df67664ebd",
+      "name": "auto-portfolio",
+      "slug": "auto-portfolio",
+      "description": "> Your code writes your portfolio.",
+      "long_description": "> Your code writes your portfolio. A zero-input portfolio generator that mines your git history and builds a stunning personal site.",
+      "path": "/Users/Joshua.Knox/projects/auto-portfolio",
+      "remote_url": "https://github.com/bigknoxy/auto-portfolio.git",
+      "created_at": "2026-04-29T22:34:24-05:00",
+      "last_active": "2026-04-29T22:34:24-05:00",
       "last_active_display": "Today",
-      "total_commits": 1,
+      "total_commits": 6,
       "contributors": [
-        "Test User"
+        "Josh",
+        "Joshua Knox"
       ],
-      "primary_language": "Python",
+      "primary_language": "JavaScript",
       "languages": {
-        "Python": 100.0
+        "JavaScript": 60.1,
+        "TypeScript": 28.1,
+        "Python": 11.8,
+        "C": 0.0
       },
       "stack": [
         "Python",
-        "FastAPI"
+        "Pydantic",
+        "Typer",
+        "Pytest"
       ],
-      "has_tests": false,
-      "has_ci": false,
-      "has_docs": false,
-      "quality_score": 0.15,
+      "has_tests": true,
+      "has_ci": true,
+      "has_docs": true,
+      "quality_score": 1.0,
       "tags": [],
       "screenshot": null,
       "preview_text": null,
-      "size_bytes": 112
+      "size_bytes": 203566074
     },
     {
-      "id": "e7e2b3944b31c8cb",
-      "name": "sample_repo",
-      "slug": "sample-repo",
-      "description": "A sample web application for testing.",
-      "long_description": "A sample web application for testing.",
-      "path": "/Users/Joshua.Knox/projects/auto-portfolio/tests/fixtures/sample_repo",
-      "remote_url": null,
-      "created_at": "2026-04-26T16:52:06-05:00",
-      "last_active": "2026-04-26T16:52:06-05:00",
+      "id": "f5ba5c0e1e2e5e52",
+      "name": "claude-statusbar",
+      "slug": "claude-statusbar",
+      "description": "Custom status line display for Claude Code showing model, path, git branch, context usage, and rate limits with live countdown timers.",
+      "long_description": "Custom status line display for Claude Code showing model, path, git branch, context usage, and rate limits with live countdown timers.",
+      "path": "/Users/Joshua.Knox/projects/claude-statusbar",
+      "remote_url": "https://github.com/bigknoxy/claude-statusbar.git",
+      "created_at": "2026-04-29T21:45:30-05:00",
+      "last_active": "2026-04-29T21:45:30-05:00",
       "last_active_display": "Today",
       "total_commits": 2,
       "contributors": [
-        "Test User"
+        "Joshua Knox"
       ],
-      "primary_language": "JavaScript",
+      "primary_language": null,
       "languages": {},
-      "stack": [
-        "JavaScript",
-        "TypeScript",
-        "React"
-      ],
+      "stack": [],
       "has_tests": false,
       "has_ci": false,
       "has_docs": true,
-      "quality_score": 0.4,
+      "quality_score": 0.25,
       "tags": [],
       "screenshot": null,
       "preview_text": null,
-      "size_bytes": 185
+      "size_bytes": 4083
     },
     {
       "id": "a6a47d69425d72cd",
@@ -74,7 +76,7 @@
       "remote_url": "https://github.com/bigknoxy/digital-spring-clean.git",
       "created_at": "2026-04-26T16:16:08-05:00",
       "last_active": "2026-04-26T16:16:08-05:00",
-      "last_active_display": "Today",
+      "last_active_display": "3 days ago",
       "total_commits": 2,
       "contributors": [
         "bigknoxy"
@@ -105,12 +107,13 @@
       "long_description": "[![CI](https://github.com/bigknoxy/knowledge-base-dashboard/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bigknoxy/knowledge-base-dashboard/actions)",
       "path": "/Users/Joshua.Knox/projects/knowledge-base-dashboard",
       "remote_url": "https://github.com/bigknoxy/knowledge-base-dashboard.git",
-      "created_at": "2026-04-26T22:08:38-05:00",
-      "last_active": "2026-04-26T22:08:38-05:00",
+      "created_at": "2026-04-29T15:58:17-05:00",
+      "last_active": "2026-04-29T15:58:17-05:00",
       "last_active_display": "Today",
-      "total_commits": 12,
+      "total_commits": 46,
       "contributors": [
-        "Joshua Knox"
+        "Joshua Knox",
+        "bigknoxy"
       ],
       "primary_language": "Python",
       "languages": {
@@ -132,7 +135,7 @@
       "tags": [],
       "screenshot": null,
       "preview_text": null,
-      "size_bytes": 176413952
+      "size_bytes": 176424207
     },
     {
       "id": "4b44d8958c5a944e",
@@ -144,7 +147,7 @@
       "remote_url": null,
       "created_at": "2026-04-14T20:30:13-05:00",
       "last_active": "2026-04-14T20:30:13-05:00",
-      "last_active_display": "12 days ago",
+      "last_active_display": "15 days ago",
       "total_commits": 7,
       "contributors": [
         "Joshua Knox"
@@ -173,7 +176,7 @@
       "remote_url": null,
       "created_at": "2026-04-21T11:17:59-05:00",
       "last_active": "2026-04-21T11:17:59-05:00",
-      "last_active_display": "6 days ago",
+      "last_active_display": "9 days ago",
       "total_commits": 9,
       "contributors": [
         "Joshua Knox"
