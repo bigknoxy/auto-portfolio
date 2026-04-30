@@ -90,6 +90,18 @@ This is acceptable; don't assert `sum == 100.0` in tests.
 
 ## Completed: TASK-015
 
+## Learning 003 — 2026-04-29: GitHub Pages — Astro GitHub Pages base path and CSS bundling
+**Problem:** Site deployed to `https://bigknoxy.github.io/auto-portfolio/` with broken CSS and internal links
+**Root cause:**
+  - `astro.config.mjs` was missing the `base` config, so Astro output without `/auto-portfolio` prefix
+  - `global.css` had raw `@tailwind` directives served as static file instead of being processed by Astro/Tailwind pipeline
+  - All internal links were hardcoded as `href="/"` and `href="/projects"` which resolved to root, not `/auto-portfolio/`
+**Fix:**
+  - Added `base = '/auto-portfolio'` to `astro.config.mjs` so asset paths get prefixed
+  - Imported `global.css` in `BaseLayout.astro` instead of static link
+  - Used relative paths (`../`, `../projects/`) calculated from page depth for nav and project card links
+**Prevention:** Always configure `base` for GitHub Pages subdirectory deploys; Astro does NOT auto-rewrite manual hrefs
+
 ## Completed: TASK-016
 
 ---
