@@ -7,8 +7,25 @@ from core.config import ProfileConfig
 from data.models import ProjectRecord
 
 
-def write_projects_json(records: list[ProjectRecord], site_data_dir: Path) -> Path:
-    """Write site/src/data/projects.json from scanner output."""
+def write_projects_json(
+    records: list[ProjectRecord], 
+    site_data_dir: Path,
+    github_token: str | None = None
+) -> Path:
+    """Write site/src/data/projects.json from scanner output.
+    
+    Optionally enriches projects with live GitHub statistics.
+    
+    Args:
+        records: List of ProjectRecord objects
+        site_data_dir: Directory to write JSON file
+        github_token: GitHub token for live stats (optional)
+    """
+    # Enrich with live stats if token provided
+    if github_token:
+        from core.profile_importer import enrich_with_live_stats
+        records = enrich_with_live_stats(records, token=github_token)
+    
     site_data_dir.mkdir(parents=True, exist_ok=True)
     output = {
         "generated_at": datetime.utcnow().isoformat() + "Z",

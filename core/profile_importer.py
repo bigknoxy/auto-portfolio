@@ -36,7 +36,6 @@ def parse_github_profile(raw_data: dict) -> GitHubProfileData:
     
     Args:
         raw_data: Raw response from GitHub API /users endpoint
-      
     Returns:
         Structured profile data with safe defaults
     """
@@ -57,24 +56,22 @@ def import_github_profile(
     client: GitHubAPIClient | None = None
 ) -> "GitHubProfileData":
     """Import profile data from GitHub URL.
-    
+  
     Args:
         github_url: GitHub profile URL (e.g., https://github.com/username)
         client: GitHub API client (uses default if None)
-      
     Returns:
         Parsed profile data
-      
     Raises:
         ValueError: If URL is invalid
         RuntimeError: If API call fails
     """
     if not github_url or "github.com" not in github_url:
         raise ValueError("Invalid GitHub URL")
-    
+  
     username = github_url.rstrip("/").split("/")[-1]
     client = client or _get_default_client()
-    
+  
     profile_raw = client.get_user_profile(username)
     return parse_github_profile(profile_raw)
 
@@ -91,14 +88,13 @@ def select_repos_interactive(
     all_repos: list[dict] | None = None
 ) -> list[dict]:
     """Interactive repository selection.
-    
+  
     Shows available repos and prompts user to select which to include.
-    
+  
     Args:
         username: GitHub username
         client: GitHub API client
         all_repos: Pre-fetched repos (for testing)
-      
     Returns:
         List of selected repository metadata
     """
@@ -107,14 +103,14 @@ def select_repos_interactive(
     if all_repos is None:
         # Fetch repos (simplified - just first page)
         all_repos = client.get_user_repos(username, per_page=100, page=1)
-    
+  
     if not all_repos:
         console.print("[yellow]No public repositories found.[/yellow]")
         return []
-    
-    console.print(f"\n[bold]Found {len(all_repos)} repositories[/bold]\n")
-    console.print("[bold]Select repositories to include:[/bold]\n")
-    
+  
+    console.print(f"\\n[bold]Found {len(all_repos)} repositories[/bold]\\n")
+    console.print("[bold]Select repositories to include:[/bold]\\n")
+  
     # Show numbered list
     for i, repo in enumerate(all_repos, 1):
         description = repo.get("description", "No description") or ""
@@ -122,16 +118,17 @@ def select_repos_interactive(
         stars = repo.get("stargazers_count", 0)
         console.print(f"{i}. {repo['name']} - {lang} ({stars}★)")
         desc = description[:60] if len(description) > 60 else description
-        console.print(f"   {desc}...\n" if len(description) > 60 else f"   {desc}\n")
-    
+        console.print(f"   {desc}...\\n" if len(description) > 60 else f"   {desc}\\n")
+  
+  
     # Prompt for selection
     selected_input = console.input(
         "[bold blue]Enter numbers to include (comma-separated, or Enter for all): [/bold blue]"
     ).strip()
-    
+  
     if not selected_input:
         return all_repos
-    
+  
     try:
         indices = [int(x.strip()) - 1 for x in selected_input.split(",")]
         return [all_repos[i] for i in indices if 0 <= i < len(all_repos)]
@@ -146,7 +143,6 @@ def create_project_from_github(repo: dict, username: str) -> "ProjectRecord":
     Args:
         repo: Repository metadata from GitHub API
         username: GitHub username (for remote URL)
-      
     Returns:
         ProjectRecord for portfolio generation
     """
@@ -160,6 +156,7 @@ def create_project_from_github(repo: dict, username: str) -> "ProjectRecord":
     if created_at_raw:
         created_at = datetime.fromisoformat(created_at_raw.rstrip("Z"))
   
+    
     primary_lang = repo.get("language")
     
     return ProjectRecord(
@@ -179,3 +176,59 @@ def create_project_from_github(repo: dict, username: str) -> "ProjectRecord":
         has_docs=bool(repo.get("description")),
         size_bytes=repo.get("size", 0) or 0
     )
+
+
+def enrich_with_live_stats(
+    projects: list["ProjectRecord"],
+    token: str | None = None,
+    use_cache: bool = True
+) -> list["ProjectRecord"]:
+    """EnrichprojectswithliveGitHubstatistics.
+    
+    Args:
+        projects: List of ProjectRecord objects
+        token: GitHub token for API (optional)
+        use_cache: Whether to use caching
+    Returns:
+        Enriched list of projects
+    """
+    try:
+        from core.github_graphql import GraphQLClient
+    except ImportError:
+        console.print("[yellow]GraphQL client not available, skipping live stats[/yellow]")
+        return projects
+  
+    client = GraphQLClient(token=token)
+  
+    enriched = []
+  
+    for project in projects:
+        try:
+            # Extract owner/repo from remote_url
+            if not project.remote_url:
+                enriched.append(project)
+                continue
+        
+            parts = project.remote_url.rstrip("/").split("/")
+            owner = parts[-2] if len(parts) >= 2 else ""
+            repo_name = parts[-1] if parts else ""
+      
+            if not owner or not repo_name:
+                enriched.append(project)
+                continue
+      
+            stats = client.get_repo_stats(owner, repo_name)
+            project.total_commits = stats.total_commits
+            project.live_stats = {
+                "total_commits": stats.total_commits,
+                "languages": stats.language_percentages,
+                "last_commit_date": stats.last_commit_date,
+                "ci_passing": stats.ci_passing
+            }
+        except Exception as e:
+            console.print(f"[yellow]Could not fetch live stats for {project.name}: {e}[/yellow]")
+      
+        enriched.append(project)
+  
+  
+    return enriched
