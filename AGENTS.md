@@ -134,6 +134,10 @@ Astro reads that JSON at build time. Never import Python from Astro or vice vers
 **Prevention:** ...
 ```
 
+**Before fixing any issue, check `LEARNINGS.md` for known patterns and their solutions.**
+If you find a matching pattern, apply the known solution first, then adapt for the current context.
+This prevents recurring issues and accelerates debugging.
+
 ---
 
 ## Definition of Done

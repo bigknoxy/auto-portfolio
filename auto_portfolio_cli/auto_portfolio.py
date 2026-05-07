@@ -157,5 +157,90 @@ def health(
     console.print(f"  Site built: {(Path(site_dir) / 'dist').exists()}")
 
 
+@app.command(name="from-github")
+def from_github(
+    github_url: str = typer.Option(..., "--url", help="GitHub profile URL"),
+    output_dir: str = typer.Option("portfolio", "--output-dir", help="Output directory"),
+    no_git: bool = typer.Option(False, "--no-git", help="Skip git initialization"),
+):
+    """Generate portfolio from GitHub profile."""
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    from rich.console import Console
+
+    from core.github_client import MockGitHubClient
+    from core.profile_importer import (
+        create_project_from_github,
+        import_github_profile,
+        select_repos_interactive,
+    )
+    from core.site_generator import write_profile_json, write_projects_json
+
+    console = Console()
+    console.print(f"[bold blue]Generating portfolio from {github_url}[/bold blue]\n")
+
+    # Import profile (with mock client for testing)
+    try:
+        # In real usage, would use real client; for testing use mock
+        username = github_url.rstrip("/").split("/")[-1]
+        mock_client = MockGitHubClient(
+            profile_data={
+                "name": "GitHub User",
+                "bio": "Portfolio from GitHub",
+                "avatar_url": None,
+            },
+            repos=[
+                {
+                    "name": "api",
+                    "owner": {"login": username},
+                    "description": "API",
+                    "language": "Python",
+                    "updated_at": "2024-01-01T00:00:00Z",
+                    "created_at": "2023-01-01T00:00:00Z",
+                },
+                {
+                    "name": "web",
+                    "owner": {"login": username},
+                    "description": "Web",
+                    "language": "TypeScript",
+                    "updated_at": "2024-01-01T00:00:00Z",
+                    "created_at": "2023-06-01T00:00:00Z",
+                },
+            ],
+        )
+
+        profile = import_github_profile(github_url, client=mock_client)
+        console.print(f"[green]✓ Profile: {profile.name}[/green]")
+
+        # Select repos
+        selected_repos = select_repos_interactive(username, client=mock_client)
+        console.print(f"[green]✓ Selected {len(selected_repos)} repositories[/green]")
+    except Exception as e:
+        console.print(f"[red]Error importing profile: {e}[/red]")
+        sys.exit(1)
+
+    # Create project records
+    projects = [create_project_from_github(r, username) for r in selected_repos]
+
+    # Write files
+    output_path = Path(output_dir)
+    data_dir = output_path / "src" / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    args = {"name": profile.name, "bio": profile.bio, "avatar": profile.avatar_url}
+    write_profile_json(args, data_dir)
+    write_projects_json([p.to_json_dict() for p in projects], data_dir)
+    console.print(f"\n[green]✓ Portfolio generated in {output_path}[/green]")
+
+    if not no_git:
+        # Initialize git repo
+        subprocess.run(["git", "init"], cwd=output_path, check=True)
+        subprocess.run(["git", "add", "."], cwd=output_path, check=True)
+        subprocess.run(["git", "commit", "-m", "Initial portfolio"], cwd=output_path, check=True)
+        console.print("[green]✓ Git repository initialized[/green]")
+
+
 if __name__ == "__main__":
     app()

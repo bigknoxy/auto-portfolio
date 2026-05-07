@@ -1,5 +1,6 @@
 import re
 from datetime import datetime
+from typing import Any
 
 from pydantic import BaseModel, Field, computed_field
 
@@ -36,6 +37,8 @@ class ProjectRecord(BaseModel):
     screenshot_path: str | None = None
     size_bytes: int = 0
     preview_text: str | None = None
+    # Live stats from GitHub GraphQL
+    live_stats: dict[str, Any] | None = None
 
     @computed_field
     @property
@@ -79,4 +82,5 @@ class ProjectRecord(BaseModel):
             "screenshot": self.screenshot_path,
             "preview_text": self.preview_text,
             "size_bytes": self.size_bytes,
+            "live_stats": self.live_stats,
         }

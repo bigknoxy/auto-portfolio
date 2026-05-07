@@ -23,13 +23,13 @@ playwright = [
 ]
 
 [project.scripts]
-auto-portfolio = "cli.auto_portfolio:app"
+auto-portfolio = "auto_portfolio_cli.auto_portfolio:app"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
 [tool.setuptools.packages.find]
-include = ["core*", "cli*", "data*"]
+include = ["core*", "cli*", "data*", "auto_portfolio_cli*"]
 
 [tool.ruff]
 line-length = 100

@@ -90,11 +90,35 @@ This is acceptable; don't assert `sum == 100.0` in tests.
 
 ## Completed: TASK-015
 
+## Learning 003 — 2026-04-29: GitHub Pages — Astro GitHub Pages base path and CSS bundling
+**Problem:** Site deployed to `https://bigknoxy.github.io/auto-portfolio/` with broken CSS and internal links
+**Root cause:**
+  - `astro.config.mjs` was missing the `base` config, so Astro output without `/auto-portfolio` prefix
+  - `global.css` had raw `@tailwind` directives served as static file instead of being processed by Astro/Tailwind pipeline
+  - All internal links were hardcoded as `href="/"` and `href="/projects"` which resolved to root, not `/auto-portfolio/`
+**Fix:**
+  - Added `base = '/auto-portfolio'` to `astro.config.mjs` so asset paths get prefixed
+  - Imported `global.css` in `BaseLayout.astro` instead of static link
+  - Used relative paths (`../`, `../projects/`) calculated from page depth for nav and project card links
+**Prevention:** Always configure `base` for GitHub Pages subdirectory deploys; Astro does NOT auto-rewrite manual hrefs
+
 ## Completed: TASK-016
 
 ---
 
-All 16 tasks complete! ✅
----
+## Learning 004 — 2026-04-29: ruff line length and integration test fixes
+**Problem:** Multiple ruff E501 (line too long) errors and broken integration test
+**Root cause:**
+  - Lines in `profile_importer.py` exceeded 100 chars with f-strings and inline logic
+  - `tests/integration/test_github_workflow.py` used dict where `ProfileConfig` object expected
+  - Date format `2023-6-1T00:00:00Z` was invalid ISO-8601 (should be `2023-06-01T00:00:00Z`)
+  - Test assertion accessed `projects_data[0]` but JSON structure is `{"projects": [...]}`
+**Fix:**
+  - Split long lines, extracted intermediate variables
+  - Updated test to use `ProfileConfig` object for `write_profile_json`
+  - Fixed date format in test fixture
+  - Fixed assertion to access `projects_data["projects"][0]`
+  - Made `write_projects_json` accept both `ProjectRecord` objects and plain dicts via `_to_dict` helper
+**Prevention:** Always use valid ISO-8601 dates in test fixtures; verify function signatures match test usage
 
 *No task learnings yet — add them as you work.*

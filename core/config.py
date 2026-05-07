@@ -20,6 +20,8 @@ class ScanConfig:
     )
     min_commits: int = 1
     max_age_days: int = 730
+    include_patterns: list[str] = field(default_factory=list)
+    exclude_paths: list[str] = field(default_factory=list)
 
 
 @dataclass

@@ -7,16 +7,40 @@ from core.config import ProfileConfig
 from data.models import ProjectRecord
 
 
-def write_projects_json(records: list[ProjectRecord], site_data_dir: Path) -> Path:
-    """Write site/src/data/projects.json from scanner output."""
+def write_projects_json(
+    records: list[ProjectRecord], 
+    site_data_dir: Path,
+    github_token: str | None = None
+) -> Path:
+    """Write site/src/data/projects.json from scanner output.
+    
+    Optionally enriches projects with live GitHub statistics.
+    
+    Args:
+        records: List of ProjectRecord objects
+        site_data_dir: Directory to write JSON file
+        github_token: GitHub token for live stats (optional)
+    """
+    # Enrich with live stats if token provided
+    if github_token:
+        from core.profile_importer import enrich_with_live_stats
+        records = enrich_with_live_stats(records, token=github_token)
+    
     site_data_dir.mkdir(parents=True, exist_ok=True)
     output = {
         "generated_at": datetime.utcnow().isoformat() + "Z",
-        "projects": [r.to_json_dict() for r in records],
+        "projects": [_to_dict(r) for r in records],
     }
     out_path = site_data_dir / "projects.json"
     out_path.write_text(json.dumps(output, indent=2, default=str))
     return out_path
+
+
+def _to_dict(r):
+    """Convert record to dict, handling both ProjectRecord and dict."""
+    if hasattr(r, "to_json_dict"):
+        return r.to_json_dict()
+    return r
 
 
 def write_profile_json(profile: ProfileConfig, site_data_dir: Path) -> Path:
